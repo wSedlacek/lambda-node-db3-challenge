@@ -44,3 +44,13 @@ export const update = async (body: Scheme, id: string | number) => {
 
   return await findById(body.id || id);
 };
+
+export const remove = async (id: string | number) => {
+  const scheme = await findById(id);
+  const count = await db<Scheme>('schemes')
+    .where({ id })
+    .del();
+  if (!count) throw new Error('Did not remove!');
+
+  return scheme;
+};
