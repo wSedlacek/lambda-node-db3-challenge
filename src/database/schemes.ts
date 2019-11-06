@@ -34,3 +34,13 @@ export const addStep = async (body: Steps, scheme_id: string | number) => {
     .where({ id })
     .first();
 };
+
+export const update = async (body: Scheme, id: string | number) => {
+  await findById(id);
+  const count = await db<Scheme>('schemes')
+    .where({ id })
+    .update(body);
+  if (!count) throw new Error('Did not update!');
+
+  return await findById(body.id || id);
+};
