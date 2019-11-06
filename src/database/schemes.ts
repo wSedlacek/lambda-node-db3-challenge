@@ -21,3 +21,16 @@ export const findSteps = async (scheme_id: string | number) => {
   steps.forEach((step) => delete step.scheme_id);
   return steps;
 };
+
+export const add = async (body: Scheme) => {
+  const [id] = await db<Scheme>('schemes').insert(body);
+  return await findById(id);
+};
+
+export const addStep = async (body: Steps, scheme_id: string | number) => {
+  await findById(scheme_id);
+  const [id] = await db<Steps>('steps').insert({ ...body, scheme_id });
+  return await db<Steps>('steps')
+    .where({ id })
+    .first();
+};
