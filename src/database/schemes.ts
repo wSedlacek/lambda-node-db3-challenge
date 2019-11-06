@@ -18,6 +18,7 @@ export const findSteps = async (scheme_id: string | number) => {
     .join('schemes', { 'steps.scheme_id': 'schemes.id' })
     .where({ scheme_id });
 
+  if (!steps.length) throw new Error('404');
   steps.forEach((step) => delete step.scheme_id);
   return steps;
 };

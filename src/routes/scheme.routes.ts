@@ -27,7 +27,6 @@ schemeRouter.get('/:id', async ({ params: { id } }, res) => {
 schemeRouter.get('/:id/steps', async ({ params: { id } }, res) => {
   try {
     const steps = await findSteps(id);
-    if (!steps.length) throw new Error('404');
     res.json(steps);
   } catch (err) {
     if (err.toString() === '404')
